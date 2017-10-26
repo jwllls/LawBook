@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.jwllls.lawbook.R;
 import com.jwllls.lawbook.base.BaseActivity;
+import com.jwllls.lawbook.model.CaseMain;
 import com.jwllls.lawbook.model.CaseModel;
 
 import butterknife.BindView;
@@ -115,6 +116,7 @@ public class RecordActivity extends BaseActivity {
     private void uploadData() {
 
         CaseModel c = new CaseModel();
+        final CaseMain m = new CaseMain();
 
         c.setNick(pref.getString("nick", ""));
         c.setPhone(pref.getString("phone", ""));
@@ -123,11 +125,12 @@ public class RecordActivity extends BaseActivity {
         c.setCaseNo(etCaseNo.getText().toString());
         c.setClientName(etClientName.getText().toString());
         c.setClientAddress(etClientAddress.getText().toString());
-        c.setClerkContact(etClientContact.getText().toString());
         c.setLawsuitStatus(etLawsuitStatus.getText().toString());
         c.setQueryPassword(etQuertPassword.getText().toString());
         c.setQueryAddress(etQuertAddress.getText().toString());
         c.setAttenEvent(etAttenEvent.getText().toString());
+
+        c.setProcedure(etProcedure.getText().toString());
         c.setFirstSummons(etFirstSummons.getText().toString());
         c.setFirstSession(etFirstSession.getText().toString());
         c.setRightStop(etRightStop.getText().toString());
@@ -135,29 +138,39 @@ public class RecordActivity extends BaseActivity {
         c.setAppealStop(etAppealStop.getText().toString());
         c.setCounterclaimStop(etCounterclaimStop.getText().toString());
         c.setSealupDate(etSealupDate.getText().toString());
-        c.setJudgeContact(judgeContact.getText().toString());
-        c.setClerkContact(clertContact.getText().toString());
-        c.setLawsuitAddress(etLawsuitAddress.getText().toString());
-        c.setLawyerContact(etLawyerContact.getText().toString());
-        c.setLitigantContact(etLitigantContact.getText().toString());
-        c.setBacklog(etBacklog.getText().toString());
-        c.setEventTimeLine(etEventTimeLine.getText().toString());
-        c.setOccurDate(etOccurDate.getText().toString());
-        c.setEventType(etEventType.getText().toString());
-        c.setUpDateContent(etUpdateContent.getText().toString());
-        c.setRemark(etRemark.getText().toString());
+
+
+        m.setJudgeContact(judgeContact.getText().toString());
+        m.setClerkContact(clertContact.getText().toString());
+        m.setLawsuitAddress(etLawsuitAddress.getText().toString());
+        m.setLawyerContact(etLawyerContact.getText().toString());
+        m.setLitigantContact(etLitigantContact.getText().toString());
+        m.setBacklog(etBacklog.getText().toString());
+
+        m.setEventTimeLine(etEventTimeLine.getText().toString());
+        m.setOccurDate(etOccurDate.getText().toString());
+        m.setEventType(etEventType.getText().toString());
+        m.setUpDateContent(etUpdateContent.getText().toString());
+        m.setRemark(etRemark.getText().toString());
 
         c.save(new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {
                 if (e == null) {
-                    shortToast("保存成功");
+
+                    m.save(new SaveListener<String>() {
+                        @Override
+                        public void done(String s, BmobException e) {
+                            shortToast("保存成功");
+                        }
+                    });
                     finish();
-                }else {
-                    shortToast(s+e.toString());
+                } else {
+                    shortToast(s + e.toString());
                 }
             }
         });
+
 
     }
 }

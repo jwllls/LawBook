@@ -27,26 +27,24 @@
             android:layout_toRightOf="@id/item_nick" />
 
 
-        <LinearLayout
-            android:layout_centerInParent="true"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+
 
         <TextView
+            android:layout_alignParentRight="true"
             android:id="@+id/item_caseNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
-            android:textSize="30dp" />
+             />
 
 
         <TextView
+            android:layout_centerInParent="true"
             android:id="@+id/item_caseName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30dp" />
-        </LinearLayout>
+
 
         <TextView
             android:id="@+id/item_time"

@@ -43,7 +43,7 @@ public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.CaseHolder> {
         holder.nick.setText(cases.get(position).getNick());
         holder.phone.setText(cases.get(position).getPhone());
 
-        holder.item_caseNo.setText(cases.get(position).getCaseNo()+". ");
+        holder.item_caseNo.setText(cases.get(position).getCaseNo());
         holder.item_caseName.setText(cases.get(position).getCaseName());
 
         holder.time.setText(cases.get(position).getCreatedAt());

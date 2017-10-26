@@ -22,6 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
@@ -47,6 +48,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.dl_phone)
     TextView dlPhone;
 
+
     private CaseAdapter adapter;
     private List<CaseModel> cases = new ArrayList<>();
 
@@ -69,8 +71,8 @@ public class MainActivity extends BaseActivity {
             public void done(List<CaseModel> object, BmobException e) {
                 if (e == null) {
                     shortToast("查询成功：共" + object.size() + "条数据。");
-                    cases = object;
-                    setData();
+                    adapter = new CaseAdapter(MainActivity.this, object);
+                    recyclerList.setAdapter(adapter);
                     refresh_layout.setRefreshing(false);
                 } else {
                     Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -85,8 +87,7 @@ public class MainActivity extends BaseActivity {
 
 
     private void setData() {
-        adapter = new CaseAdapter(this, cases);
-        recyclerList.setAdapter(adapter);
+
     }
 
     @SuppressLint("NewApi")
@@ -113,5 +114,8 @@ public class MainActivity extends BaseActivity {
     }
 
 
-
+    @OnClick(R.id.btn_cancle)
+    public void onViewClicked() {
+        finish();
+    }
 }

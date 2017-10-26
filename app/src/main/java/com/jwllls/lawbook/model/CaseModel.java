@@ -8,41 +8,29 @@ import cn.bmob.v3.BmobObject;
 
 public class CaseModel extends BmobObject {
 
-    private String initialRecord;
-    private String caseName;
-    private String caseNo;
-    private String clientName;
-    private String clientContact;
-    private String clientAddress;
-    private String lawsuitStatus;
-    private String queryPassword;
-    private String queryAddress;
-    private String attenEvent;
+    private String nick;  //昵称
+    private String phone;//电话
 
-    private String firstSummons;
-    private String firstSession;
-    private String rightStop;
-    private String quoteStop;
-    private String appealStop;
-    private String counterclaimStop;
-    private String sealupDate;
+    private String initialRecord; //初始记录
+    private String caseName; //案件名
+    private String caseNo;  //案号
+    private String clientName; //委托人名称
+    private String clientContact; //委托人经办及联系方式
+    private String clientAddress; //委托人地址
+    private String lawsuitStatus; //诉讼地位
+    private String queryPassword; //查询面膜
+    private String queryAddress; //查询地址
+    private String attenEvent;  //注意事项
 
-    private String judgeContact;
-    private String clerkContact;
-    private String lawsuitAddress;
-    private String lawyerContact;
-    private String litigantContact;
-    private String backlog;
+    private String procedure;  //程序阶段
+    private String firstSummons; //首次收到传票日
+    private String firstSession;    //首次开庭日
+    private String rightStop;   //管辖权截止日
+    private String quoteStop;   //举证截止日
+    private String appealStop; //上诉截止日
+    private String counterclaimStop; //反诉截止日
+    private String sealupDate; //查封到期日
 
-    private String eventTimeLine;
-    private String occurDate;
-    private String eventType;
-    private String upDateContent;
-    private String remark;
-
-
-    private String nick;
-    private String phone;
 
     public String getNick() {
         return nick;
@@ -140,6 +128,14 @@ public class CaseModel extends BmobObject {
         this.attenEvent = attenEvent;
     }
 
+    public String getProcedure() {
+        return procedure;
+    }
+
+    public void setProcedure(String procedure) {
+        this.procedure = procedure;
+    }
+
     public String getFirstSummons() {
         return firstSummons;
     }
@@ -196,91 +192,5 @@ public class CaseModel extends BmobObject {
         this.sealupDate = sealupDate;
     }
 
-    public String getJudgeContact() {
-        return judgeContact;
-    }
 
-    public void setJudgeContact(String judgeContact) {
-        this.judgeContact = judgeContact;
-    }
-
-    public String getClerkContact() {
-        return clerkContact;
-    }
-
-    public void setClerkContact(String clerkContact) {
-        this.clerkContact = clerkContact;
-    }
-
-    public String getLawsuitAddress() {
-        return lawsuitAddress;
-    }
-
-    public void setLawsuitAddress(String lawsuitAddress) {
-        this.lawsuitAddress = lawsuitAddress;
-    }
-
-    public String getLawyerContact() {
-        return lawyerContact;
-    }
-
-    public void setLawyerContact(String lawyerContact) {
-        this.lawyerContact = lawyerContact;
-    }
-
-    public String getLitigantContact() {
-        return litigantContact;
-    }
-
-    public void setLitigantContact(String litigantContact) {
-        this.litigantContact = litigantContact;
-    }
-
-    public String getBacklog() {
-        return backlog;
-    }
-
-    public void setBacklog(String backlog) {
-        this.backlog = backlog;
-    }
-
-    public String getEventTimeLine() {
-        return eventTimeLine;
-    }
-
-    public void setEventTimeLine(String eventTimeLine) {
-        this.eventTimeLine = eventTimeLine;
-    }
-
-    public String getOccurDate() {
-        return occurDate;
-    }
-
-    public void setOccurDate(String occurDate) {
-        this.occurDate = occurDate;
-    }
-
-    public String getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
-    }
-
-    public String getUpDateContent() {
-        return upDateContent;
-    }
-
-    public void setUpDateContent(String upDateContent) {
-        this.upDateContent = upDateContent;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
 }

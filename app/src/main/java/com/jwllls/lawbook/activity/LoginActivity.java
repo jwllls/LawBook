@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.jwllls.lawbook.Constant;
@@ -26,6 +27,7 @@ import cn.bmob.v3.listener.FindListener;
 
 import static com.jwllls.lawbook.Constant.editor;
 import static com.jwllls.lawbook.Constant.pref;
+
 
 /**
  * Created by jwllls on 2017/10/23.
@@ -63,15 +65,42 @@ public class LoginActivity extends BaseActivity {
         pref = this.getSharedPreferences("data", MODE_PRIVATE);
         editor = pref.edit();
 
-        if (cbRem.isChecked()) {
-            etPhone.setText(pref.getString("username", ""));
-            etPassword.setText(pref.getString("password", ""));
-            if (cbAuto.isChecked()) {
-                Intent intent1=new Intent();
-                intent1.setClass(getApplicationContext(), MainActivity.class);
-                startActivity(intent1);
+
+        cbRem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    editor.putBoolean("isRem",true);
+                }else {
+                    editor.putBoolean("isRem",false);
+                }
+                editor.commit();
+            }
+        });
+
+        cbAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    editor.putBoolean("isAuto",true);
+                }else {
+                    editor.putBoolean("isAuto",false);
+                }
+                editor.commit();
+            }
+        });
+
+        if(pref.getBoolean("isRem",false)){
+            cbRem.setChecked(true);
+            etPhone.setText(pref.getString("username",""));
+            etPassword.setText(pref.getString("password",""));
+
+            if(pref.getBoolean("isAuto",false)){
+                cbRem.setChecked(true);
+                startActivity(new Intent(this,MainActivity.class));
             }
         }
+
 
     }
 
@@ -96,11 +125,15 @@ public class LoginActivity extends BaseActivity {
                                         if (cbRem.isChecked()) {
                                             editor.putString("username", etPhone.getText().toString());
                                             editor.putString("password", etPassword.getText().toString());
+                                        }else {
+                                            editor.putString("username","");
+                                            editor.putString("password", "");
                                         }
                                         editor.commit();
                                         pd.dismiss();
+                                        LoginActivity.this.finish();
                                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                        finish();
+
                                     } else {
                                         shortToast("账号或密码错误");
                                     }
