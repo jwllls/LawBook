@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.jwllls.lawbook.R;
 import com.jwllls.lawbook.base.BaseActivity;
@@ -36,6 +37,8 @@ public class RegisterActivity extends BaseActivity {
     Button btnRegister;
     @BindView(R.id.btn_cancle)
     Button btnCancle;
+    @BindView(R.id.title_name)
+    TextView titleName;
 
 
     private ProgressDialog progressDialog;
@@ -45,6 +48,7 @@ public class RegisterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
+        titleName.setText("注册");
     }
 
 

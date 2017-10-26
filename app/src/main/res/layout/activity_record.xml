@@ -15,19 +15,27 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/bmob_update_button_close_bg_selector"
+            android:layout_marginLeft="0dp"
+            android:background="@mipmap/back"
             android:gravity="center_vertical" />
+
+
+        <TextView
+            android:id="@+id/title_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/btn_save"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="10dp"
             android:gravity="center_vertical"
             android:text="保存"
-            android:textColor="#ffff"
+            android:textColor="@color/white"
             android:textSize="20sp" />
     </RelativeLayout>
 
@@ -42,10 +50,12 @@
             android:layout_marginRight="10dp"
             android:orientation="vertical">
             初始记录
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -57,10 +67,12 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
             案件名称
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -72,10 +84,12 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
             案件号
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -87,10 +101,12 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
             委托人名称
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -102,6 +118,7 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
             委托人经办及联系方式
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -185,6 +202,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="关注事项：" />
+
+                <EditText
+                    android:id="@+id/et_attenEvent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
             程序阶段
 
             <LinearLayout
@@ -219,6 +252,7 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -246,7 +280,7 @@
                     android:text="管辖权截止日：" />
 
                 <EditText
-                    android:id="@+id/et_tightStop"
+                    android:id="@+id/et_rightStop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>

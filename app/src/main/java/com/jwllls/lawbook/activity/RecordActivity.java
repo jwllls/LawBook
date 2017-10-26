@@ -1,6 +1,5 @@
 package com.jwllls.lawbook.activity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -16,6 +15,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+
+import static com.jwllls.lawbook.Constant.pref;
 
 /**
  * Created by jwllls on 2017/10/25.
@@ -45,14 +46,16 @@ public class RecordActivity extends BaseActivity {
     EditText etQuertPassword;
     @BindView(R.id.et_quertAddress)
     EditText etQuertAddress;
+    @BindView(R.id.et_attenEvent)
+    EditText etAttenEvent;
     @BindView(R.id.et_procedure)
     EditText etProcedure;
     @BindView(R.id.et_firstSummons)
     EditText etFirstSummons;
     @BindView(R.id.et_firstSession)
     EditText etFirstSession;
-    @BindView(R.id.et_tightStop)
-    EditText etTightStop;
+    @BindView(R.id.et_rightStop)
+    EditText etRightStop;
     @BindView(R.id.et_quoteStop)
     EditText etQuoteStop;
     @BindView(R.id.et_appealStop)
@@ -60,7 +63,7 @@ public class RecordActivity extends BaseActivity {
     @BindView(R.id.et_counterclaimStop)
     EditText etCounterclaimStop;
     @BindView(R.id.sealupDate)
-    EditText sealupDate;
+    EditText etSealupDate;
     @BindView(R.id.judgeContact)
     EditText judgeContact;
     @BindView(R.id.clertContact)
@@ -85,8 +88,6 @@ public class RecordActivity extends BaseActivity {
     EditText etRemark;
 
 
-    SharedPreferences pref ;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +97,7 @@ public class RecordActivity extends BaseActivity {
     }
 
     private void initView() {
-        pref = getSharedPreferences("data",MODE_PRIVATE);
+        pref = getSharedPreferences("data", MODE_PRIVATE);
     }
 
     @OnClick({R.id.btn_cancle, R.id.btn_save})
@@ -112,20 +113,48 @@ public class RecordActivity extends BaseActivity {
     }
 
     private void uploadData() {
-        CaseModel c = new CaseModel();
-        c.setNick(pref.getString("nick",""));
-        c.setPhone(pref.getString("phone",""));
 
+        CaseModel c = new CaseModel();
+
+        c.setNick(pref.getString("nick", ""));
+        c.setPhone(pref.getString("phone", ""));
+        c.setInitialRecord(etInitialRecord.getText().toString());
         c.setCaseName(etCaseName.getText().toString());
         c.setCaseNo(etCaseNo.getText().toString());
-        c.setInitialRecord(etInitialRecord.getText().toString());
+        c.setClientName(etClientName.getText().toString());
+        c.setClientAddress(etClientAddress.getText().toString());
+        c.setClerkContact(etClientContact.getText().toString());
+        c.setLawsuitStatus(etLawsuitStatus.getText().toString());
+        c.setQueryPassword(etQuertPassword.getText().toString());
+        c.setQueryAddress(etQuertAddress.getText().toString());
+        c.setAttenEvent(etAttenEvent.getText().toString());
+        c.setFirstSummons(etFirstSummons.getText().toString());
+        c.setFirstSession(etFirstSession.getText().toString());
+        c.setRightStop(etRightStop.getText().toString());
+        c.setQuoteStop(etQuoteStop.getText().toString());
+        c.setAppealStop(etAppealStop.getText().toString());
+        c.setCounterclaimStop(etCounterclaimStop.getText().toString());
+        c.setSealupDate(etSealupDate.getText().toString());
+        c.setJudgeContact(judgeContact.getText().toString());
+        c.setClerkContact(clertContact.getText().toString());
+        c.setLawsuitAddress(etLawsuitAddress.getText().toString());
+        c.setLawyerContact(etLawyerContact.getText().toString());
+        c.setLitigantContact(etLitigantContact.getText().toString());
+        c.setBacklog(etBacklog.getText().toString());
+        c.setEventTimeLine(etEventTimeLine.getText().toString());
+        c.setOccurDate(etOccurDate.getText().toString());
+        c.setEventType(etEventType.getText().toString());
+        c.setUpDateContent(etUpdateContent.getText().toString());
+        c.setRemark(etRemark.getText().toString());
+
         c.save(new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {
-                if(e == null)
-                {
+                if (e == null) {
                     shortToast("保存成功");
                     finish();
+                }else {
+                    shortToast(s+e.toString());
                 }
             }
         });
