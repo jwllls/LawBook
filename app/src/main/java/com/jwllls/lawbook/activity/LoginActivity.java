@@ -69,10 +69,10 @@ public class LoginActivity extends BaseActivity {
         cbRem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    editor.putBoolean("isRem",true);
-                }else {
-                    editor.putBoolean("isRem",false);
+                if (isChecked) {
+                    editor.putBoolean("isRem", true);
+                } else {
+                    editor.putBoolean("isRem", false);
                 }
                 editor.commit();
             }
@@ -81,23 +81,23 @@ public class LoginActivity extends BaseActivity {
         cbAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    editor.putBoolean("isAuto",true);
-                }else {
-                    editor.putBoolean("isAuto",false);
+                if (isChecked) {
+                    editor.putBoolean("isAuto", true);
+                } else {
+                    editor.putBoolean("isAuto", false);
                 }
                 editor.commit();
             }
         });
 
-        if(pref.getBoolean("isRem",false)){
+        if (pref.getBoolean("isRem", false)) {
             cbRem.setChecked(true);
-            etPhone.setText(pref.getString("username",""));
-            etPassword.setText(pref.getString("password",""));
+            etPhone.setText(pref.getString("username", ""));
+            etPassword.setText(pref.getString("password", ""));
 
-            if(pref.getBoolean("isAuto",false)){
+            if (pref.getBoolean("isAuto", false)) {
                 cbRem.setChecked(true);
-                startActivity(new Intent(this,MainActivity.class));
+                startActivity(new Intent(this, MainActivity.class));
             }
         }
 
@@ -112,20 +112,21 @@ public class LoginActivity extends BaseActivity {
                 final ProgressDialog pd = new ProgressDialog(this);
                 pd.show();
                 BmobQuery<UserModel> query = new BmobQuery<>();
-                query.setLimit(1).order("phone")
+                query.setLimit(1).addWhereEqualTo("phone", etPhone.getText().toString())
                         .findObjects(new FindListener<UserModel>() {
                             @Override
                             public void done(List<UserModel> object, BmobException e) {
                                 if (e == null) {
                                     if (object.get(0).getPassword().equals(etPassword.getText().toString())) {
+
                                         shortToast("登录成功");
                                         editor.putString("nick", object.get(0).getNick());
                                         editor.putString("phone", object.get(0).getPhone());
                                         if (cbRem.isChecked()) {
                                             editor.putString("username", etPhone.getText().toString());
                                             editor.putString("password", etPassword.getText().toString());
-                                        }else {
-                                            editor.putString("username","");
+                                        } else {
+                                            editor.putString("username", "");
                                             editor.putString("password", "");
                                         }
                                         editor.commit();

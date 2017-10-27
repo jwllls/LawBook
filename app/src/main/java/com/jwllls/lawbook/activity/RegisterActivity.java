@@ -36,7 +36,7 @@ public class RegisterActivity extends BaseActivity {
     @BindView(R.id.btn_register)
     Button btnRegister;
     @BindView(R.id.btn_cancle)
-    Button btnCancle;
+    TextView btnCancle;
     @BindView(R.id.title_name)
     TextView titleName;
 

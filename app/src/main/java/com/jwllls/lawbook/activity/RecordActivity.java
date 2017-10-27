@@ -89,6 +89,10 @@ public class RecordActivity extends BaseActivity {
     EditText etRemark;
 
 
+    private CaseModel caseModel;
+    private CaseMain caseMain;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,9 +103,53 @@ public class RecordActivity extends BaseActivity {
 
     private void initView() {
         pref = getSharedPreferences("data", MODE_PRIVATE);
+
+        caseModel = (CaseModel) getIntent().getSerializableExtra("caseModel");
+        caseMain = (CaseMain) getIntent().getSerializableExtra("caseMain");
+        if (caseModel != null && caseMain != null) {
+            initData(caseModel, caseMain);
+        }
+
+
     }
 
-    @OnClick({R.id.btn_cancle, R.id.btn_save})
+    private void initData(CaseModel caseModel, CaseMain caseMain) {
+
+        etInitialRecord.setText(caseModel.getInitialRecord());
+        etCaseName.setText(caseModel.getCaseName());
+        etCaseNo.setText(caseModel.getCaseNo());
+        etClientName.setText(caseModel.getClientName());
+        etClientAddress.setText(caseModel.getClientAddress());
+        etLawsuitStatus.setText(caseModel.getLawsuitStatus());
+        etQuertPassword.setText(caseModel.getQueryPassword());
+        etQuertAddress.setText(caseModel.getQueryAddress());
+        etAttenEvent.setText(caseModel.getAttenEvent());
+
+        etProcedure.setText(caseModel.getProcedure());
+        etFirstSummons.setText(caseModel.getFirstSummons());
+        etFirstSession.setText(caseModel.getFirstSession());
+        etRightStop.setText(caseModel.getRightStop());
+        etQuoteStop.setText(caseModel.getQuoteStop());
+        etAppealStop.setText(caseModel.getAppealStop());
+        etCounterclaimStop.setText(caseModel.getCounterclaimStop());
+        etSealupDate.setText(caseModel.getSealupDate());
+
+        judgeContact.setText(caseMain.getJudgeContact());
+        clertContact.setText(caseMain.getClerkContact());
+        etLawsuitAddress.setText(caseMain.getLawsuitAddress());
+        etLawyerContact.setText(caseMain.getLawyerContact());
+        etLitigantContact.setText(caseMain.getLitigantContact());
+        etBacklog.setText(caseMain.getBacklog());
+
+        etEventTimeLine.setText(caseMain.getEventTimeLine());
+        etOccurDate.setText(caseMain.getOccurDate());
+        etEventType.setText(caseMain.getEventType());
+        etUpdateContent.setText(caseMain.getUpDateContent());
+        etRemark.setText(caseMain.getRemark());
+
+    }
+
+    @OnClick({R.id.btn_cancle, R.id.btn_save, R.id.et_firstSummons})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_cancle:
@@ -109,6 +157,9 @@ public class RecordActivity extends BaseActivity {
                 break;
             case R.id.btn_save:
                 uploadData();
+                break;
+            case R.id.et_firstSummons:
+
                 break;
         }
     }
@@ -170,7 +221,7 @@ public class RecordActivity extends BaseActivity {
                 }
             }
         });
-
-
     }
+
+
 }

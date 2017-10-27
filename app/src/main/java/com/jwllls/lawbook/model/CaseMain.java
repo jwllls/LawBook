@@ -1,12 +1,14 @@
 package com.jwllls.lawbook.model;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobObject;
 
 /**
  * Created by jwllls on 2017/10/26.
  */
 
-public class CaseMain extends BmobObject {
+public class CaseMain extends BmobObject implements Serializable {
 
 
     private String judgeContact; //经办法官联系方式

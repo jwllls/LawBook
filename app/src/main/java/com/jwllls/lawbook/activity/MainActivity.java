@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.jwllls.lawbook.R;
 import com.jwllls.lawbook.adapter.CaseAdapter;
 import com.jwllls.lawbook.base.BaseActivity;
+import com.jwllls.lawbook.model.CaseMain;
 import com.jwllls.lawbook.model.CaseModel;
 
 import java.util.List;
@@ -30,7 +31,6 @@ import cn.bmob.v3.listener.FindListener;
 
 import static com.jwllls.lawbook.Constant.editor;
 import static com.jwllls.lawbook.Constant.pref;
-import static java.lang.System.exit;
 
 public class MainActivity extends BaseActivity {
 
@@ -56,6 +56,8 @@ public class MainActivity extends BaseActivity {
     TextView dlSetting;
     @BindView(R.id.dl_logout)
     TextView dlLogout;
+    @BindView(R.id.dl_myShare)
+    TextView dlMyShare;
 
 
     private CaseAdapter adapter;
@@ -66,31 +68,36 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        getData();
         initViews();
+        getData();
+
 
     }
 
     private void getData() {
         BmobQuery<CaseModel> query = new BmobQuery<CaseModel>();
+        final BmobQuery<CaseMain> q = new BmobQuery<CaseMain>();
+        q.setLimit(50);
         query.setLimit(50);
         query.findObjects(new FindListener<CaseModel>() {
             @Override
-            public void done(List<CaseModel> object, BmobException e) {
+            public void done(final List<CaseModel> object, BmobException e) {
                 if (e == null) {
                     shortToast("查询成功：共" + object.size() + "条数据。");
-                    adapter = new CaseAdapter(MainActivity.this, object);
-                    recyclerList.setAdapter(adapter);
-                    refresh_layout.setRefreshing(false);
+                    q.findObjects(new FindListener<CaseMain>() {
+                        @Override
+                        public void done(List<CaseMain> list, BmobException e) {
+                            adapter.setCaseData(object, list);
+                            recyclerList.setAdapter(adapter);
+                            refresh_layout.setRefreshing(false);
+                        }
+                    });
+
                 } else {
                     Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                 }
             }
-
-
         });
-
-
     }
 
 
@@ -111,12 +118,12 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        adapter = new CaseAdapter(this);
+
     }
 
 
-
-
-    @OnClick({R.id.btn_cancle, R.id.fab, R.id.dl_setting, R.id.dl_logout})
+    @OnClick({R.id.btn_cancle, R.id.fab, R.id.dl_setting, R.id.dl_logout, R.id.dl_myShare})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_cancle:
@@ -125,23 +132,32 @@ public class MainActivity extends BaseActivity {
             case R.id.fab:
                 startActivity(new Intent(this, RecordActivity.class));
                 break;
+            case R.id.dl_myShare:
+                startActivity(new Intent(this, MyShareActivity.class));
+                break;
             case R.id.dl_setting:
                 startActivity(new Intent(this, SettingActivity.class));
                 break;
             case R.id.dl_logout:
                 new AlertDialog.Builder(this)
-//                        .setTitle("退出登录")
                         .setMessage("是否退出登录?")
-                        .setNegativeButton("取消",null)
+                        .setNegativeButton("取消", null)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                editor.clear();
-                                exit(0);
+                                editor.clear().commit();
+                                finish();
+                                startActivity(new Intent(MainActivity.this, LoginActivity.class));
                             }
                         })
                         .show();
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
     }
 }

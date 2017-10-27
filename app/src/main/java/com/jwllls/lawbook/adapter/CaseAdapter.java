@@ -1,5 +1,7 @@
 package com.jwllls.lawbook.adapter;
 
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jwllls.lawbook.R;
-import com.jwllls.lawbook.activity.MainActivity;
+import com.jwllls.lawbook.activity.RecordActivity;
+import com.jwllls.lawbook.base.BaseActivity;
+import com.jwllls.lawbook.model.CaseMain;
 import com.jwllls.lawbook.model.CaseModel;
 
 import java.util.ArrayList;
@@ -20,14 +24,19 @@ import java.util.List;
 public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.CaseHolder> {
 
 
-
-
-    private MainActivity activity;
+    private BaseActivity activity;
     private List<CaseModel> cases = new ArrayList<>();
+    private List<CaseMain> list = new ArrayList<>();
 
-    public CaseAdapter(MainActivity activity,List<CaseModel> cases) {
+    public CaseAdapter(BaseActivity activity) {
         this.activity = activity;
+
+    }
+
+
+    public void setCaseData(List<CaseModel> cases,List<CaseMain> list){
         this.cases = cases;
+        this.list = list;
     }
 
     @Override
@@ -38,7 +47,7 @@ public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.CaseHolder> {
     }
 
     @Override
-    public void onBindViewHolder(CaseHolder holder, int position) {
+    public void onBindViewHolder(CaseHolder holder, final int position) {
 
         holder.nick.setText(cases.get(position).getNick());
         holder.phone.setText(cases.get(position).getPhone());
@@ -47,9 +56,18 @@ public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.CaseHolder> {
         holder.item_caseName.setText(cases.get(position).getCaseName());
 
         holder.time.setText(cases.get(position).getCreatedAt());
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new  Intent(activity, RecordActivity.class);
+                it.putExtra("caseModel",cases.get(position));
+                it.putExtra("caseMain",list.get(position));
+                activity.startActivity(it);
+
+            }
+        });
     }
-
-
 
 
     @Override
@@ -57,17 +75,20 @@ public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.CaseHolder> {
         return cases.size();
     }
 
-   static class CaseHolder extends RecyclerView.ViewHolder {
+    static class CaseHolder extends RecyclerView.ViewHolder {
 
-        TextView nick, phone, item_caseNo,item_caseName, time;
+        TextView nick, phone, item_caseNo, item_caseName, time;
+
+        CardView cardView;
 
         public CaseHolder(View itemView) {
             super(itemView);
             nick = (TextView) itemView.findViewById(R.id.item_nick);
             phone = (TextView) itemView.findViewById(R.id.item_phone);
-            item_caseNo =(TextView) itemView.findViewById(R.id.item_caseNo);
+            item_caseNo = (TextView) itemView.findViewById(R.id.item_caseNo);
             item_caseName = (TextView) itemView.findViewById(R.id.item_caseName);
             time = (TextView) itemView.findViewById(R.id.item_time);
+            cardView = (CardView) itemView.findViewById(R.id.cardView);
 
         }
     }

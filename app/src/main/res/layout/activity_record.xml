@@ -21,12 +21,12 @@
 
 
         <TextView
-            android:textSize="20sp"
             android:id="@+id/title_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/btn_save"
@@ -251,6 +251,7 @@
                     android:id="@+id/et_firstSummons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
             </LinearLayout>
 
 

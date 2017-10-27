@@ -13,19 +13,23 @@ public class BaseActivity extends AppCompatActivity {
 
     private static Boolean isExit = false;
 
+    public BaseActivity getActivity() {
+
+        return this;
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    public void shortToast(String str){
-        Toast.makeText(this,str,Toast.LENGTH_SHORT).show();
+    public void shortToast(String str) {
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
     }
 
-    public void longToast(String str){
-        Toast.makeText(this,str,Toast.LENGTH_LONG).show();
+    public void longToast(String str) {
+        Toast.makeText(this, str, Toast.LENGTH_LONG).show();
     }
-
 
 
 //    public boolean onKeyDown(int keyCode, KeyEvent event) {
