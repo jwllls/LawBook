@@ -117,7 +117,6 @@ public class LoginActivity extends BaseActivity {
                             @Override
                             public void done(List<UserModel> object, BmobException e) {
                                 if (e == null) {
-                                    // ...
                                     if (object.get(0).getPassword().equals(etPassword.getText().toString())) {
                                         shortToast("登录成功");
                                         editor.putString("nick", object.get(0).getNick());

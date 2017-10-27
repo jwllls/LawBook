@@ -1,10 +1,12 @@
 package com.jwllls.lawbook.activity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,7 +19,6 @@ import com.jwllls.lawbook.adapter.CaseAdapter;
 import com.jwllls.lawbook.base.BaseActivity;
 import com.jwllls.lawbook.model.CaseModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,6 +27,10 @@ import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+
+import static com.jwllls.lawbook.Constant.editor;
+import static com.jwllls.lawbook.Constant.pref;
+import static java.lang.System.exit;
 
 public class MainActivity extends BaseActivity {
 
@@ -47,10 +52,13 @@ public class MainActivity extends BaseActivity {
     TextView dlNick;
     @BindView(R.id.dl_phone)
     TextView dlPhone;
+    @BindView(R.id.dl_setting)
+    TextView dlSetting;
+    @BindView(R.id.dl_logout)
+    TextView dlLogout;
 
 
     private CaseAdapter adapter;
-    private List<CaseModel> cases = new ArrayList<>();
 
 
     @Override
@@ -86,21 +94,13 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    private void setData() {
-
-    }
-
     @SuppressLint("NewApi")
     private void initViews() {
 
         titleName.setText("");
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, RecordActivity.class));
-            }
-        });
+        dlNick.setText(pref.getString("nick", ""));
+        dlPhone.setText(pref.getString("phone", ""));
 
         recyclerList.setLayoutManager(new LinearLayoutManager(this));
 
@@ -114,8 +114,34 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    @OnClick(R.id.btn_cancle)
-    public void onViewClicked() {
-        finish();
+
+
+    @OnClick({R.id.btn_cancle, R.id.fab, R.id.dl_setting, R.id.dl_logout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_cancle:
+                finish();
+                break;
+            case R.id.fab:
+                startActivity(new Intent(this, RecordActivity.class));
+                break;
+            case R.id.dl_setting:
+                startActivity(new Intent(this, SettingActivity.class));
+                break;
+            case R.id.dl_logout:
+                new AlertDialog.Builder(this)
+//                        .setTitle("退出登录")
+                        .setMessage("是否退出登录?")
+                        .setNegativeButton("取消",null)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                editor.clear();
+                                exit(0);
+                            }
+                        })
+                        .show();
+                break;
+        }
     }
 }

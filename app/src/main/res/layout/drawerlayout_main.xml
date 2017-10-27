@@ -5,33 +5,96 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+
     <RelativeLayout
-        android:background="#463278"
         android:layout_width="match_parent"
-        android:layout_height="180dp">
+        android:layout_height="180dp"
+        android:background="#463278">
 
         <ImageView
             android:id="@+id/dl_face"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
 
         <TextView
-            android:textColor="@color/white"
             android:id="@+id/dl_nick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/dl_face"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <TextView
-            android:textColor="@color/white"
             android:id="@+id/dl_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/dl_nick"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="100dp"
+                android:background="@color/colorPrimary"
+                android:drawableRight="@mipmap/icon_more" />
+
+            <TextView
+                android:id="@+id/dl_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:drawableRight="@mipmap/icon_more"
+                android:gravity="center_vertical"
+                android:paddingTop="10dp"
+                android:text="设置"
+                android:textSize="20sp" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/colorPrimary"
+                android:drawableRight="@mipmap/icon_more" />
+
+            <TextView
+                android:id="@+id/dl_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:drawableRight="@mipmap/icon_more"
+                android:gravity="center_vertical"
+                android:paddingTop="10dp"
+                android:text="退出登录"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/colorPrimary"
+                android:drawableRight="@mipmap/icon_more" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
 </LinearLayout>
