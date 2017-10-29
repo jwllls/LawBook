@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
+import static com.jwllls.lawbook.Constant.REFRESH_DATA;
 import static com.jwllls.lawbook.Constant.pref;
 
 /**
@@ -87,6 +88,8 @@ public class RecordActivity extends BaseActivity {
     EditText etUpdateContent;
     @BindView(R.id.et_remark)
     EditText etRemark;
+    @BindView(R.id.title_name)
+    TextView titleName;
 
 
     private CaseModel caseModel;
@@ -102,6 +105,9 @@ public class RecordActivity extends BaseActivity {
     }
 
     private void initView() {
+
+        titleName.setText("案件记录");
+
         pref = getSharedPreferences("data", MODE_PRIVATE);
 
         caseModel = (CaseModel) getIntent().getSerializableExtra("caseModel");
@@ -156,6 +162,7 @@ public class RecordActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_save:
+                setResult(REFRESH_DATA);
                 uploadData();
                 break;
             case R.id.et_firstSummons:
@@ -203,6 +210,21 @@ public class RecordActivity extends BaseActivity {
         m.setEventType(etEventType.getText().toString());
         m.setUpDateContent(etUpdateContent.getText().toString());
         m.setRemark(etRemark.getText().toString());
+
+
+//        CaseWarp f = new CaseWarp();
+//        f.setCaseModel(c);
+//        f.setCaseMain(m);
+//
+//        f.save(new SaveListener<String>() {
+//            @Override
+//            public void done(String s, BmobException e) {
+//                if (e == null){
+//                    shortToast("保存成功");
+//                }
+//            }
+//        });
+
 
         c.save(new SaveListener<String>() {
             @Override

@@ -69,12 +69,12 @@ public class RegisterActivity extends BaseActivity {
                             @Override
                             public void done(String s, BmobException e) {
                                 if (e == null) {
-                                    progressDialog.dismiss();
                                     shortToast("注册成功");
                                     finish();
                                 } else {
                                     shortToast("创建数据失败：" + e.getMessage());
                                 }
+                                progressDialog.dismiss();
                             }
                         });
                     }

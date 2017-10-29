@@ -3,12 +3,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="设置"
-        android:textSize="20sp"
+    <include layout="@layout/item_title"/>
+
+
+
+    <Button
+        android:id="@+id/btn_cleanCache"
+        android:layout_marginTop="50dp"
         android:drawableRight="@mipmap/icon_more"
+        android:text="清除缓存"
+        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
 
 </LinearLayout>

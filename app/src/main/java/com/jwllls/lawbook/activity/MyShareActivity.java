@@ -1,11 +1,14 @@
 package com.jwllls.lawbook.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.jwllls.lawbook.R;
@@ -22,6 +25,7 @@ import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 import static com.jwllls.lawbook.Constant.pref;
 
@@ -60,6 +64,7 @@ public class MyShareActivity extends BaseActivity {
         BmobQuery<CaseModel> query = new BmobQuery<CaseModel>();
         final BmobQuery<CaseMain> q = new BmobQuery<CaseMain>();
         query.addWhereEqualTo("phone", pref.getString("phone", ""));
+        query.order("-createdAt");
         q.setLimit(50);
         query.setLimit(50);
         query.findObjects(new FindListener<CaseModel>() {
@@ -84,10 +89,53 @@ public class MyShareActivity extends BaseActivity {
 
     }
 
+
     private void initView() {
         titleName.setText("我的分享");
         recyclerList.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CaseAdapter(MyShareActivity.this);
+
+        refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initData();
+            }
+        });
+
+        adapter.setMyLongClickListener(new CaseAdapter.MyLongClickListener() {
+            @Override
+            public void mylongClick(View view, int postion, final CaseModel cmodel, final CaseMain cMain) {
+
+
+                new AlertDialog.Builder(MyShareActivity.this).setMessage("是否删除该条数据？").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        cmodel.setObjectId(cmodel.getObjectId());
+                        cMain.setObjectId(cMain.getObjectId());
+                        cmodel.delete(new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null) {
+                                    cMain.delete(new UpdateListener() {
+                                        @Override
+                                        public void done(BmobException e) {
+                                            if (e == null) {
+                                                shortToast("删除成功:" + cmodel.getUpdatedAt());
+                                                initData();
+                                            }
+
+                                        }
+                                    });
+                                } else {
+                                    shortToast("删除失败：" + e.getMessage());
+                                }
+                            }
+                        });
+                    }
+                }).show();
+
+            }
+        });
 
     }
 
